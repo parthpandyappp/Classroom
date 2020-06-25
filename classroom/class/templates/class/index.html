@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Bootstrap Example {% endblock %}
+
+{% block body %}
+    
+        <div class="w3-sidebar w3-red w3-bar-block w3-border w3-large" style="width:25%">
+            <h1 class="w3-bar-item" style="background-color:darkred"><i class="fa fa-home" style="font-size: xx-large;"></i> Home</h1><br><br>
+
+            <a href="#" class="w3-bar-item w3-button w3-border-bottom" style="font-size: x-large;text-decoration:none;">Our Projects</a>
+
+            <a href="#" class="w3-bar-item w3-button w3-border-bottom" style="font-size: x-large;text-decoration:none;">Github</a>
+
+            <a href="#" class="w3-bar-item w3-button w3-border-bottom" style="font-size: x-large;text-decoration:none;">About Us</a>
+
+            <a href="#" class="w3-bar-item w3-button w3-border-bottom" style="font-size: x-large;text-decoration:none;">Write Us?</a>
+
+        </div>
+        <div>
+            <img src="{% static 'images/create.svg' %}" class="mx-auto d-block" style="height: 350px; width: 50%;">
+        </div>
+
+        
+        <div class="container text-center ">
+            
+            <button class="m-5 btn inner bordered " onclick="window.location.href='/create'"><i class="fa fa-plus"></i> Create Class</button> 
+            <button class="btn inner m-5 bordered " onclick="window.location.href='/join'"><i class="fa fa-plus"></i> Join Class</button>
+            
+        </div>
+<style>
+        .btn {
+        background-color: Red;
+        border: none;
+        color: white;
+        padding: 12px 16px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 150px;
+      }
+      
+      /* Darker background on mouse-over */
+      .btn:hover {
+        background-color: maroon;
+      }
+      .inner
+      {
+          display: inline-block;
+          
+      }
+
+</style>
+{% endblock %}
+
