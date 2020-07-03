@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 from .models import Pswd
 import secrets
 import string
@@ -23,13 +25,27 @@ def check(request):
     if request.method == "POST" :
         pswrd = Pswd.objects.all()
         pswd = request.POST.get('passcode')
+        q = pswrd[len(pswrd)-1]
+        print(q.passcode)
         for p in pswrd :
             print(p.passcode)
-            print(pswd)
+            # print(pswd)
             if(p.passcode == pswd) :
                 return render(request, "okay.html")
 
-            else :
-                return render(request, "no.html")
-        
-# Create your views here.
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('index')
+    else:
+        form = UserCreationForm()
+
+    context = {'form' : form}
+    return render(request, 'registration/register.html', context)
