@@ -8,12 +8,12 @@
 
     {% if user.is_authenticated %}
     <h2>You name is: {{ user.username }}</h2>
-    {% else %}
+    <button class="m-5 btn inner bordered " onclick="window.location.href='/create'"><i class="fa fa-plus"></i> Create Class</button>
+    <button class="btn inner m-5 bordered " onclick="window.location.href='/join'"><i class="fa fa-plus"></i> Join Class</button> {% else %}
     <h2>You are not logged in.</h2>
     {% endif %}
 
-    <button class="m-5 btn inner bordered " onclick="window.location.href='/create'"><i class="fa fa-plus"></i> Create Class</button>
-    <button class="btn inner m-5 bordered " onclick="window.location.href='/join'"><i class="fa fa-plus"></i> Join Class</button>
+
 
 </div>
 {% endblock %}
