@@ -55,7 +55,7 @@ ROOT_URLCONF = 'classroom.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/home/parth/Documents/classroom/class/templates/class'],
+        'DIRS': ['/home/noob/Documents/github/Classroom/classroom/class/templates/class/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,3 +123,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
+
+LOGIN_REDIRECT_URL = "/"

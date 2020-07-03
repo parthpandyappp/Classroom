@@ -21,6 +21,7 @@ from django.conf import settings
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', include('class.urls')),
-] + staticfiles_urlpatterns()
+    path('accounts/', include('django.contrib.auth.urls')),
+]
