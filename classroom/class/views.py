@@ -14,15 +14,16 @@ def create(request):
     return render(request, "upload.html")
 
 def processing(request):
-    if request.method == "POST" :
-        name = classroom()
-        name.classname = request.POST.get('class_name')
-        name.save()
     alphabet = string.ascii_letters + string.digits 
     password = ''.join(secrets.choice(alphabet) for i in range(6))
     form = Pswd()
     form.passcode = password
     form.save()
+    if request.method == "POST" :
+        name = classroom()
+        name.classname = request.POST.get('class_name')
+        name.passcod = Pswd.objects.last()
+        name.save()
     return render(request, "create.html", {'password':password})
 
 def join(request):
