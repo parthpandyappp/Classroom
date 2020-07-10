@@ -55,7 +55,7 @@ ROOT_URLCONF = 'classroom.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/home/parth/Classroom/classroom/class/templates/class'],
+        'DIRS': ['/home/noob/Documents/github/Classroom/classroom/class/templates/class/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

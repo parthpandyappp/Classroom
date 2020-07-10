@@ -1,1 +1,12 @@
-Done, pass matched!
+{% extends "base.html" %} {% block title %} Joined {% endblock %} {% block body %}
+<p>Done, pass matched!</p>
+<!-- {% for classroom in classrooms %}
+ Name: {{ classroom.classname }} 
+ Passcode: {{ classroom.passcod.passcode }}
+{% endfor %} -->
+{% for classroom in classrooms %}
+{% if classroom.passcod.passcode == pswd %}
+ <h2>ClassName : {{ classroom.classname }} </h2>
+{% endif %}
+{% endfor %}
+{% endblock %}
