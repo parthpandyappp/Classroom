@@ -47,6 +47,14 @@ a:focus {
     margin: 40px 0;
 }
 
+/* ---------------------------------------------------
+    card STYLE
+----------------------------------------------------- */
+
+.card-body{
+    background-color :#fbfbfb;
+}
+
 
 /* ---------------------------------------------------
     SIDEBAR STYLE
@@ -166,8 +174,18 @@ a.article:hover {
 }
 
 .margin_y {
-    padding: 60px;
+    padding: 60px 90px 0 0;
 }
+
+.botn2 {
+    margin-left: 10px;
+}
+
+.mtop {
+    padding-top: 50px;
+    /* margin-top: 200px; */
+}
+
 
 
 /* ---------------------------------------------------
@@ -176,7 +194,7 @@ a.article:hover {
 
 @media (max-width: 768px) {
     #sidebar {
-        margin-left: -250px;
+        display: none;
     }
     #sidebar.active {
         margin-left: 0;
@@ -187,8 +205,44 @@ a.article:hover {
     #content.active {
         width: calc(100% - 250px);
     }
-    #sidebarCollapse span {
+    #sidebarCollapse {
         display: none;
+    }
+    /* .botn2 {
+        margin-top: 20px;
+    } */
+    .mtop {
+        margin-top: 20px;
+    }
+    .botn3 {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    #sidebar {
+        display: none;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #content {
+        width: 100%;
+    }
+    #content.active {
+        width: calc(100% - 250px);
+    }
+    #sidebarCollapse {
+        display: none;
+    }
+    .botn2 {
+        margin-top: 20px;
+    }
+    .mtop {
+        margin-top: 20px;
+    }
+    .botn3 {
+        text-align: center;
     }
 }
 
@@ -236,7 +290,6 @@ a.article:hover {
 
 .btn {
     font-size: 15px;
-    font-weight: bold;
 }
 
 input[type=text],

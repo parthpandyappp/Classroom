@@ -33,6 +33,7 @@ def check(request):
     if request.method == "POST" :
         pswrd = Pswd.objects.all()
         pswd = request.POST.get('passcode')
+        pswd = pswd.replace(" ", "")
         q = pswrd[len(pswrd)-1]
         print(q.passcode)
         for p in pswrd :
@@ -41,6 +42,8 @@ def check(request):
             if(p.passcode == pswd) :
                 classrooms = classroom.objects.all()
                 return render(request, "okay.html",{'classrooms': classrooms, 'pswd': pswd})
+            
+        return render(request,"no.html")
 
 def register(request):
     if request.method == 'POST':
