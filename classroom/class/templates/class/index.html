@@ -12,10 +12,10 @@
             <h2 class="botn3">Welcome to the alternative Learning</h2>
             <p class="botn3">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             <div class="text-center margin_y">
-                <button type="button" class="btn btn-info"  onclick="window.location.href='/create'">
+                <button type="button" class="btn" onclick="window.location.href='/create'">
                     <span>Create a Class</span>
                 </button>
-                <button type="button" class="btn btn-info botn2" onclick="window.location.href='/join'">
+                <button type="button" class="btn botn2" onclick="window.location.href='/join'">
                     <span>Join a Class</span>
                 </button>
             </div>
@@ -31,7 +31,6 @@
     {% else %}
     <h2>You are not logged in.</h2>
     <p> <u><a href="/accounts/login">Login</a></u> to get full access to the classroom.</p>
-    <img src="{% static 'images/undraw_refreshing_beverage_td3r.svg' %}" class="img-fluid" style="height: 250px; width: 100%;">
-    {% endif %}
+    <img src="{% static 'images/undraw_refreshing_beverage_td3r.svg' %}" class="img-fluid" style="height: 250px; width: 100%;"> {% endif %}
 </div>
 {% endblock %}

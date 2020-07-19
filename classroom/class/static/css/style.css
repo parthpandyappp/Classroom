@@ -47,12 +47,13 @@ a:focus {
     margin: 40px 0;
 }
 
+
 /* ---------------------------------------------------
     card STYLE
 ----------------------------------------------------- */
 
-.card-body{
-    background-color :#fbfbfb;
+.card-body {
+    background-color: #fbfbfb;
 }
 
 
@@ -187,7 +188,6 @@ a.article:hover {
 }
 
 
-
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
@@ -272,6 +272,12 @@ a.article:hover {
 .btn {
     /* min-height: 38px; */
     /* border-radius: 2px; */
+    color: #fff;
+    background-color: #6C63FF;
+}
+
+.btn:hover {
+    background-color: #6159e5;
 }
 
 .form-control {
@@ -303,10 +309,10 @@ input[type=password] {
     box-sizing: border-box;
 }
 
-.helptext{
+.helptext {
     display: none;
 }
 
-label{
+label {
     display: block;
 }
