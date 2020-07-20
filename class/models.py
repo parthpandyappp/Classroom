@@ -8,9 +8,9 @@ class Pswd(models.Model):
         return self.passcode
 
 class classroom(models.Model):
-    passcod = models.ForeignKey(Pswd, on_delete=models.CASCADE, null=True)
     classname = models.CharField(max_length=50, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user')
+    passcode = models.CharField(max_length=50, null=True)
 
     def __str__(self):
         return self.classname
