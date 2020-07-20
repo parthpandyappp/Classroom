@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% load static %} {% block title %} Join a Class {% endblock %} {% block body %}
+{% extends "class/base.html" %} {% load static %} {% block title %} Join a Class {% endblock %} {% block body %}
 <form action="/check/" method="post">
     {% csrf_token %}
     <label for="passcode">Enter Your Class Passcode here :</label><br>
