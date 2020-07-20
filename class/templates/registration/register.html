@@ -1,12 +1,11 @@
-{% extends "class/base.html" %}
-{% block title %} Register {% endblock %} {% block body %}
+{% extends "class/base.html" %} {% block title %} Register {% endblock %} {% block body %}
 <div class="login-form">
     {% if form.errors %}
     <p>There's something wrong with what you entered!</p>
     {% endif %} {% if next %}
     <p>Hey, you can't access that page.</p>
     {% endif %}
-    <form action="{% url 'login' %}" method="post">
+    <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
         <!-- <h2 class="text-center">Log in</h2>
         <div class="form-group">
