@@ -41,9 +41,9 @@ def check(request):
             # print(pswd)
             if(p.passcode == pswd) :
                 classrooms = classroom.objects.all()
-                return render(request, "okay.html",{'classrooms': classrooms, 'pswd': pswd})
+                return render(request, "class/okay.html",{'classrooms': classrooms, 'pswd': pswd})
             
-        return render(request,"no.html")
+        return render(request,"class/no.html")
 
 def register(request):
     if request.method == 'POST':
