@@ -11,7 +11,7 @@ def index(request):
     return render(request, "class/index.html")
 
 def create(request):
-    return render(request, "upload.html")
+    return render(request, "class/upload.html")
 
 def processing(request):
     alphabet = string.ascii_letters + string.digits 
@@ -24,10 +24,10 @@ def processing(request):
         name.classname = request.POST.get('class_name')
         name.passcod = Pswd.objects.last()
         name.save()
-    return render(request, "create.html", {'password':password})
+    return render(request, "class/create.html", {'password':password})
 
 def join(request):
-    return render(request, "join.html")
+    return render(request, "class/join.html")
 
 def check(request):
     if request.method == "POST" :

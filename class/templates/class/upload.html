@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% load static %}{% block title %} Create a Class {% endblock %} {% block body %}
+{% extends "class/base.html" %} {% load static %}{% block title %} Create a Class {% endblock %} {% block body %}
                 <form action="/processing/" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-group">
