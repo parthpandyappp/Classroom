@@ -1,0 +1,13 @@
+{% extends "class/base.html" %} {% block title %} Create a Class {% endblock %} {% block body %}
+<p>Share this six digit passcode with students :
+    <div id="myInput">
+        {{password}}
+    </div>
+</p>
+<button class="btn inner bordered " data-clipboard-target="#myInput">Copy text</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+<script type="text/javascript">
+    new ClipboardJS('.btn');
+</script>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "class/base.html" %}
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
+<body>
+    {% if form.errors %}
+    <p>There's something wrong with what you entered!</p>
+    {% endif %} {% if next %}
+    <p>Hey, you can't access that page.</p>
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        <p>Username: {{ form.username }}</p>
+        <p>Password: {{ form.password }}</p>
+
+        <p><input type="submit" value="login"></p>
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+</body>
+
+</html> -->
+
+{% block title %} Login {% endblock %} {% block body %}
+<div class="login-form">
+    {% if form.errors %}
+    <p>There's something wrong with what you entered!</p>
+    {% endif %} {% if next %}
+    <p>Hey, you can't access that page.</p>
+    {% endif %}
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <h2 class="text-center">Log in</h2>
+        <div class="form-group">
+            <span class="txt1 p-b-11">
+                Username
+            </span>
+            <p class="form-control">{{ form.username }}</p>
+        </div>
+        <div class="form-group">
+            <span class="txt1 p-b-11">
+                Password
+            </span>
+            <p class="form-control">{{ form.password }}</p>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block" value="login">Log in</button>
+        </div>
+        <div class="clearfix">
+            <label class="float-left form-check-label"><input type="checkbox"> Remember me</label>
+            <a href="#" class="float-right">Forgot Password?</a>
+        </div>
+    </form>
+    <p class="text-center"><a href="/register">Create an Account</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "class/base.html" %} {% load static %}{% block title %} Create a Class {% endblock %} {% block body %}
+
+<form action="/processing/" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="exampleInputEmail1">Class Title</label>
+        <input type="text" name="class_name" class="form-control" id="cardtitle" aria-describedby="emailHelp" placeholder="Give a suitable title to your classroom" required>
+        <small id="emailHelp" class="form-text text-muted">Remember to keep character count in limit.</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Go ahead! Create my classroom!</button>
+</form>
+
+
+    {% endblock %}
+
