@@ -1,24 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
+from accounts.models import UserProfile
 
 
 class Pswd(models.Model):
-    passcode = models.CharField(max_length=50, null=True)
-
-    def __str__(self):
-        return self.passcode
-
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name='profile',
-        null=True, blank=True
-    )
-
-    def __str__(self):
-        return self.user.username
+    passcode = models.CharField(max_length=150)
 
 
 class classroom(models.Model):
@@ -27,15 +14,9 @@ class classroom(models.Model):
         User, on_delete=models.CASCADE, related_name='user', null=True,
         blank=True
     )
-    code = models.ForeignKey(Pswd, on_delete=models.CASCADE, null=True)
+    code = models.ForeignKey(
+        Pswd, on_delete=models.CASCADE, related_name='code')
     user_profile = models.ManyToManyField(UserProfile)
 
     def __str__(self):
         return self.classname
-
-
-@receiver(post_save, sender=User)
-def create_or_update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
-    instance.profile.save()
