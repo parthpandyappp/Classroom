@@ -6,7 +6,8 @@ from accounts.models import UserProfile
 
 class Pswd(models.Model):
     passcode = models.CharField(max_length=150, null=True)
-
+    def __str__(self):
+        return self.passcode
 
 class classroom(models.Model):
     classname = models.CharField(max_length=50, null=True)
