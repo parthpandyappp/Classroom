@@ -54,14 +54,14 @@
                             <a href="#">{{ user.username }}</a>
                         </li>
                         <li>
-                            <a href="/accounts/logout">Logout</a>
+                            <a href="{% url 'logout' %}">Logout</a>
                         </li>
                         {% else %}
                         <li>
-                            <a href="/accounts/login">Login</a>
+                            <a href="{% url 'login' %}">Login</a>
                         </li>
                         <li>
-                            <a href="/register">Signup</a>
+                            <a href="{% url 'register' %}">Signup</a>
                         </li>
                         {% endif %}
                     </ul>
