@@ -31,7 +31,7 @@ def processing(request):
         name.code = Pswd.objects.last()
         name.save()
     return render(request, "class/create.html", {'password': password})
- # some code
+# some code
 
 
 def join(request):
