@@ -1,18 +1,14 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 
 import secrets
-import string
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, FormView, UpdateView
+from django.views.generic import CreateView, FormView
 
-from accounts.models import UserProfile
-
-from .forms import ClassroomCreateForm
+from .forms import ClassroomCreateForm, ClassroomJoinForm
 from .models import Classroom
 
 
@@ -20,22 +16,22 @@ def index(request):
     return render(request, "classnote/index.html")
 
 
-def create(request):
-    return render(request, "classnote/upload.html")
+# def create(request):
+#     return render(request, "classnote/upload.html")
 
 
-def processing(request):
-    alphabet = string.ascii_letters + string.digits
-    password = ''.join(secrets.choice(alphabet) for i in range(6))
-    form = Pswd()
-    form.passcode = password
-    form.save()
-    if request.method == "POST":
-        name = classroom()
-        name.classname = request.POST.get('class_name')
-        name.code = Pswd.objects.last()
-        name.save()
-    return render(request, "classnote/create.html", {'password': password})
+# def processing(request):
+#     alphabet = string.ascii_letters + string.digits
+#     password = ''.join(secrets.choice(alphabet) for i in range(6))
+#     form = Pswd()
+#     form.passcode = password
+#     form.save()
+#     if request.method == "POST":
+#         name = classroom()
+#         name.classname = request.POST.get('class_name')
+#         name.code = Pswd.objects.last()
+#         name.save()
+#     return render(request, "classnote/create.html", {'password': password})
 
 
 class ClassroomCreateView(CreateView):
@@ -55,33 +51,39 @@ class ClassroomCreateView(CreateView):
         return super(ClassroomCreateView, self).form_valid(form)
 
 
-class ClassroomJoinView(UpdateView):
-    model = UserProfile
-    template_name = 'classnote/userprofile_form.html'
-    fields = ('classrooms', )
+class ClassroomJoinView(FormView):
+    form_class = ClassroomJoinForm
+    template_name = 'classnote/class_join.html'
     success_url = reverse_lazy('index')
 
+    def form_valid(self, form):
+        profile = self.request.user.profile
+        identifier = form.cleaned_data.get('identifier')
+        classroom = Classroom.objects.filter(identifier=identifier)
+        profile.classrooms.set(classroom)
+        return super(ClassroomJoinView, self).form_valid(form)
 
-def join(request):
-    return render(request, "classnote/join.html")
+
+# def join(request):
+#     return render(request, "classnote/join.html")
 
 
-def check(request):
-    if request.method == "POST":
-        pswrd = Pswd.objects.all()
-        pswd = request.POST.get('passcode')
-        pswd = pswd.replace(" ", "")
-        q = pswrd[len(pswrd)-1]
-        print(q.passcode)
-        for p in pswrd:
-            print(p.passcode)
-            # print(pswd)
-            if(p.passcode == pswd):
-                classrooms = classroom.objects.all()
-                return render(request, "classnote/okay.html",
-                              {'classrooms': classrooms, 'pswd': pswd})
+# def check(request):
+#     if request.method == "POST":
+#         pswrd = Pswd.objects.all()
+#         pswd = request.POST.get('passcode')
+#         pswd = pswd.replace(" ", "")
+#         q = pswrd[len(pswrd)-1]
+#         print(q.passcode)
+#         for p in pswrd:
+#             print(p.passcode)
+#             # print(pswd)
+#             if(p.passcode == pswd):
+#                 classrooms = classroom.objects.all()
+#                 return render(request, "classnote/okay.html",
+#                               {'classrooms': classrooms, 'pswd': pswd})
 
-        return render(request, "class/no.html")
+#         return render(request, "class/no.html")
 
 
 def register(request):
