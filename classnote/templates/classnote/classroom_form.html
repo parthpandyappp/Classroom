@@ -1,13 +1,13 @@
 {% extends "classnote/base.html" %} {% block title %} Create a Class {% endblock %} {% block body %}
 <p>Share this six digit passcode with students :
     <div id="myInput">
-        {{password}}
+        {{form.identifier.value}}
     </div>
 </p>
 <form method="POST">
     {% csrf_token %}
     {{form.as_p }}
-  <button type="submit">Create class</button>
+    <button type="submit">Create class</button>
 </form>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>

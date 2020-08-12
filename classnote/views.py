@@ -6,13 +6,15 @@ import string
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
-from django.views.generic import CreateView, FormView, UpdateView
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy 
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, FormView, UpdateView
 
-from .models import Classroom
+from accounts.models import UserProfile
+
 from .forms import ClassroomCreateForm
-from accounts.models import UserProfile 
+from .models import Classroom
+
 
 def index(request):
     return render(request, "classnote/index.html")
@@ -34,27 +36,31 @@ def processing(request):
         name.code = Pswd.objects.last()
         name.save()
     return render(request, "classnote/create.html", {'password': password})
- 
+
+
 class ClassroomCreateView(CreateView):
-	model = Classroom
-	form_class = ClassroomCreateForm
-	template_name = 'classnote/classroom_form.html'
-	success_url = reverse_lazy('index')
-	
-	def form_valid(self, form):
-		new_classroom = form.instance
-		new_classroom.creator = self.request.user.profile
-		return super(ClassroomCreateView, self).form_valid(form)
+    model = Classroom
+    form_class = ClassroomCreateForm
+    template_name = 'classnote/classroom_form.html'
+    success_url = reverse_lazy('index')
+
+    def get_initial(self):
+        initial = super(ClassroomCreateView, self).get_initial()
+        initial['identifier'] = secrets.token_urlsafe()[:6]
+        return initial
+
+    def form_valid(self, form):
+        new_classroom = form.instance
+        new_classroom.creator = self.request.user.profile
+        return super(ClassroomCreateView, self).form_valid(form)
 
 
 class ClassroomJoinView(UpdateView):
-	model = UserProfile
-	template_name = 'classnote/userprofile_form.html'
-	fields = ('classrooms', )
-	success_url = reverse_lazy('index')
-	
-	#
->>>>>>> 2ee364eb30eaa4159acd882b08673139d73f6e4c
+    model = UserProfile
+    template_name = 'classnote/userprofile_form.html'
+    fields = ('classrooms', )
+    success_url = reverse_lazy('index')
+
 
 def join(request):
     return render(request, "classnote/join.html")
