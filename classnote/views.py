@@ -6,17 +6,20 @@ import string
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import CreateView
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy 
 
-from .models import Pswd, classroom
+from .models import Classroom
+from .forms import ClassroomCreateForm
 
 
 def index(request):
-    return render(request, "class/index.html")
+    return render(request, "classnote/index.html")
 
 
 def create(request):
-    return render(request, "class/upload.html")
+    return render(request, "classnote/upload.html")
 
 
 def processing(request):
@@ -30,12 +33,23 @@ def processing(request):
         name.classname = request.POST.get('class_name')
         name.code = Pswd.objects.last()
         name.save()
-    return render(request, "class/create.html", {'password': password})
+    return render(request, "classnote/create.html", {'password': password})
  # some code
+ 
+class ClassroomCreateView(CreateView):
+	model = Classroom
+	form_class = ClassroomCreateForm
+	template_name = 'classnote/classroom_form.html'
+	success_url = reverse_lazy('index')
+	
+	def form_valid(self, form):
+		new_classroom = form.instance
+		new_classroom.creator = self.request.user
+		return super(ClassroomCreateView, self).form_valid(form)
 
 
 def join(request):
-    return render(request, "class/join.html")
+    return render(request, "classnote/join.html")
 
 
 def check(request):
@@ -50,7 +64,7 @@ def check(request):
             # print(pswd)
             if(p.passcode == pswd):
                 classrooms = classroom.objects.all()
-                return render(request, "class/okay.html",
+                return render(request, "classnote/okay.html",
                               {'classrooms': classrooms, 'pswd': pswd})
 
         return render(request, "class/no.html")
