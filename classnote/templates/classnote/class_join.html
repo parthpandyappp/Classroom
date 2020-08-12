@@ -2,8 +2,8 @@
 </p>
 <form method="POST">
   {% csrf_token %}
-  {{form }}
-  <button type="submit">Join class</button>
+  {{form.as_p }}
+  <button type="submit" class="btn btn-success btn-block">Join class</button>
 </form>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>

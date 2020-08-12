@@ -1,13 +1,14 @@
 {% extends "classnote/base.html" %} {% block title %} Create a Class {% endblock %} {% block body %}
-<p>Share this six digit passcode with students :
-    <div id="myInput">
+<p class="text-dark">Share this six digit passcode with your students :
+    <div id="identifier" class="text-success">
         {{form.identifier.value}}
     </div>
 </p>
+<hr />
 <form method="POST">
     {% csrf_token %}
     {{form.as_p }}
-    <button type="submit">Create class</button>
+    <button type="submit" class="btn btn-success btn-block">Create class</button>
 </form>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
