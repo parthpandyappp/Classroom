@@ -2,7 +2,7 @@
 name = "classroom"
 version = "0.1.0"
 description = ""
-authors = ["Parth Pandya <parthpandyappp@gmail.com>"]
+authors = ["Parth Pandya <parthpandyappp@gmail.com>","IgnisDa <ignisda2001@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
