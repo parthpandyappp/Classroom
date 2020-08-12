@@ -6,17 +6,20 @@ import string
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import CreateView, FormView, UpdateView
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy 
 
-from .models import Pswd, classroom
-
+from .models import Classroom
+from .forms import ClassroomCreateForm
+from accounts.models import UserProfile 
 
 def index(request):
-    return render(request, "class/index.html")
+    return render(request, "classnote/index.html")
 
 
 def create(request):
-    return render(request, "class/upload.html")
+    return render(request, "classnote/upload.html")
 
 
 def processing(request):
@@ -30,12 +33,31 @@ def processing(request):
         name.classname = request.POST.get('class_name')
         name.code = Pswd.objects.last()
         name.save()
-    return render(request, "class/create.html", {'password': password})
-# some code
+    return render(request, "classnote/create.html", {'password': password})
+ 
+class ClassroomCreateView(CreateView):
+	model = Classroom
+	form_class = ClassroomCreateForm
+	template_name = 'classnote/classroom_form.html'
+	success_url = reverse_lazy('index')
+	
+	def form_valid(self, form):
+		new_classroom = form.instance
+		new_classroom.creator = self.request.user.profile
+		return super(ClassroomCreateView, self).form_valid(form)
 
+
+class ClassroomJoinView(UpdateView):
+	model = UserProfile
+	template_name = 'classnote/userprofile_form.html'
+	fields = ('classrooms', )
+	success_url = reverse_lazy('index')
+	
+	#
+>>>>>>> 2ee364eb30eaa4159acd882b08673139d73f6e4c
 
 def join(request):
-    return render(request, "class/join.html")
+    return render(request, "classnote/join.html")
 
 
 def check(request):
@@ -50,7 +72,7 @@ def check(request):
             # print(pswd)
             if(p.passcode == pswd):
                 classrooms = classroom.objects.all()
-                return render(request, "class/okay.html",
+                return render(request, "classnote/okay.html",
                               {'classrooms': classrooms, 'pswd': pswd})
 
         return render(request, "class/no.html")

@@ -1,4 +1,4 @@
-{% extends "class/base.html" %} {% load static %} {% block title %} {% for classroom in classrooms %} {% if classroom.passcod.passcode == pswd %} {% filter upper %} {{ classroom.classname }} {% endfilter %} {% endif %} {% endfor %} {% endblock %}
+{% extends "classnote/base.html" %} {% load static %} {% block title %} {% for classroom in classrooms %} {% if classroom.passcod.passcode == pswd %} {% filter upper %} {{ classroom.classname }} {% endfilter %} {% endif %} {% endfor %} {% endblock %}
 
 <!-- Block body -->
 
