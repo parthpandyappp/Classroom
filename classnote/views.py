@@ -6,13 +6,13 @@ import string
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
-from django.views.generic import CreateView
+from django.views.generic import CreateView, FormView, UpdateView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy 
 
 from .models import Classroom
 from .forms import ClassroomCreateForm
-
+from accounts.models import UserProfile 
 
 def index(request):
     return render(request, "classnote/index.html")
@@ -44,9 +44,17 @@ class ClassroomCreateView(CreateView):
 	
 	def form_valid(self, form):
 		new_classroom = form.instance
-		new_classroom.creator = self.request.user
+		new_classroom.creator = self.request.user.profile
 		return super(ClassroomCreateView, self).form_valid(form)
 
+
+class ClassroomJoinView(UpdateView):
+	model = UserProfile
+	template_name = 'classnote/userprofile_form.html'
+	fields = ('classrooms', )
+	success_url = reverse_lazy('index')
+	
+	#
 
 def join(request):
     return render(request, "classnote/join.html")

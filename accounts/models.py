@@ -5,7 +5,8 @@ from django.db.models.signals import post_save
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile',null=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    classrooms = models.ManyToManyField('classnote.Classroom')
 
     def __str__(self):
         return self.user.username
