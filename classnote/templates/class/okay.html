@@ -5,7 +5,7 @@
 {% block body %}
 <p>Done, pass matched!</p>
 
-{% for classroom in classrooms %} {% if classroom.passcod.passcode == pswd %}
+{% for classroom in classrooms %} {% if classroom.code.passcode == pswd %}
 <div class="container ">
     <div class="card mb-3 mt-3">
         <img src="{% static 'images/8.png' %}" class="card-img-top" alt="...">

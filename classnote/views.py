@@ -11,7 +11,7 @@ from accounts.models import User
 
 from .models import Pswd, classroom
 
-
+ 
 def index(request):
     return render(request, "class/index.html")
 
@@ -32,7 +32,7 @@ def processing(request):
         name.creator =  request.user
         name.code = Pswd.objects.last()
         name.save()
-    return render(request, "class/create.html", {'password': password})
+    return render(request, "class/create.html", {'password': password, 'creator': name.creator})
 
 
 def join(request):
