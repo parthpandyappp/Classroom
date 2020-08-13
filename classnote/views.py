@@ -7,6 +7,7 @@ import string
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
+from accounts.models import User
 
 from .models import Pswd, classroom
 
@@ -28,6 +29,7 @@ def processing(request):
     if request.method == "POST":
         name = classroom()
         name.classname = request.POST.get('class_name')
+        name.creator =  request.user
         name.code = Pswd.objects.last()
         name.save()
     return render(request, "class/create.html", {'password': password})
@@ -49,8 +51,7 @@ def check(request):
             # print(pswd)
             if(p.passcode == pswd):
                 classrooms = classroom.objects.all()
-                return render(request, "class/okay.html",
-                              {'classrooms': classrooms, 'pswd': pswd})
+                return render(request, "class/okay.html", {'classrooms': classrooms, 'pswd': pswd})
 
         return render(request, "class/no.html")
 

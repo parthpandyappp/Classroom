@@ -11,7 +11,8 @@ class Pswd(models.Model):
 
 class classroom(models.Model):
     classname = models.CharField(max_length=50, null=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user', null=True,blank=True)
+    #user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user', null=True,blank=True)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE,related_name='creator', null=True)
     code = models.ForeignKey(Pswd, on_delete=models.CASCADE, related_name='code',null=True)
     user_profile = models.ManyToManyField(UserProfile)
 
