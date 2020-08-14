@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
 from accounts.models import User
-
+from .forms import RegistrationForm
 from .models import Pswd, classroom
 
  
@@ -58,7 +58,7 @@ def check(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegistrationForm(request.POST)
 
         if form.is_valid():
             form.save()
@@ -68,7 +68,7 @@ def register(request):
             login(request, user)
             return redirect('index')
     else:
-        form = UserCreationForm()
+        form = RegistrationForm()
 
     context = {'form': form}
     return render(request, 'registration/register.html', context)
