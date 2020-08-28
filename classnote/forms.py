@@ -38,3 +38,15 @@ class Join(forms.Form):
         fields = [
             'join'
         ]
+
+class UserUpdate(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+        ]
+        def __init__(self):
+            super(UserUpdate, self).__init__()

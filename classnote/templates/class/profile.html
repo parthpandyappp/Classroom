@@ -1,0 +1,25 @@
+{% extends "class/base.html" %} {% load static %} {% block title %} Join a Class {% endblock %} {% block body %}
+
+{% if messages %}
+<ul class="messages">
+    {% for msg in messages %}       
+    <p class="text-center">
+        <div class="alert alert-{{msg.level_tag}} alert-dismissible text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{msg.message}}
+        </div>
+    </p>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div class="card-body card mb-3 mt-3">
+    <ul style="list-style-type:circle;">
+        <li><h3 class="card-title">Username : {{user.username}}</h3></li>
+        <li><h3 class="card-title">First_name : {{user.first_name}}</h3></li>
+        <li><h3 class="card-title">Last_name : {{user.last_name}}</h3></li>
+        <li><h3 class="card-title">Email address : {{user.email}}</h3></li>
+    </ul>
+    <a href="/update-profile/"><button type="submit" class="btn btn-primary">Wanna update above?</button></a>
+</div>
+{% endblock %}

@@ -7,7 +7,7 @@ import string
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
 from accounts.models import User
-from .forms import RegistrationForm, Join
+from .forms import RegistrationForm, Join, UserUpdate
 from .models import classroom
 from django.contrib import messages
 
@@ -95,3 +95,24 @@ def register(request):
 
     context = {'form': form}
     return render(request, 'registration/register.html', context)
+
+"""
+    Below views for Profile details and it's updations
+"""
+
+def profile(request):
+    return render(request, "class/profile.html")
+
+def UserUpdatation(request):
+    if request.method == 'POST':
+        form = UserUpdate(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Great, User updated successfully!')
+            return render(request, 'class/profile.html')
+    else:
+        form = UserUpdate(instance=request.user)
+        args = {}
+        args['form'] = form
+        return render(request, 'class/edit_profile.html', args)
