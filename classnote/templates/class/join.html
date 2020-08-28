@@ -1,8 +1,21 @@
 {% extends "class/base.html" %} {% load static %} {% block title %} Join a Class {% endblock %} {% block body %}
-<form action="/check/" method="post">
+<form action="." method="post">
     {% csrf_token %}
-    <label for="passcode">Enter Your Class Passcode here :</label><br>
-    <input type="code" id="code" name="passcode"><br>
-    <input type="submit" value="Submit">
+
+        {% if messages %}
+            <ul class="messages">
+                {% for msg in messages %}       
+                    <p class="text-center">
+                        <div class="alert alert-{{msg.level_tag}} text-center" role="alert">
+                            {{msg.message}}
+                        </div>
+                    </p>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    
+    {{form.as_p}}
+    
+    <button type="submit" class="btn btn-primary">Let's Join</button>
 </form>
 {% endblock %}

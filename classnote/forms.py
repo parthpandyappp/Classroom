@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from accounts.models import UserProfile
+from .models import classroom
 
 """
     User-registration form which extends user model with extra fields
@@ -28,5 +29,12 @@ class RegistrationForm(UserCreationForm):
 
             if commit:
                 user.save()
-
             return user
+
+class Join(forms.Form):
+    join = forms.CharField(strip=True, max_length=6, required=True, help_text="Enter the unique code here")
+    class Meta:
+        model = classroom
+        fields = [
+            'join'
+        ]

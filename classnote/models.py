@@ -6,10 +6,10 @@ from accounts.models import UserProfile
     Model for storing unique pass-code, and performing queries 
     simply related to password handling. 
 """
-class Pswd(models.Model):
-    passcode = models.CharField(max_length=150, null=True)
-    def __str__(self):
-        return self.passcode
+# class Pswd(models.Model):
+#     passcode = models.CharField(max_length=150, null=True)
+#     def __str__(self):
+#         return self.passcode
 
 """
                         | Main model of this project |
@@ -21,7 +21,7 @@ class classroom(models.Model):
     classname = models.CharField(max_length=50, null=True)
     #user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user', null=True,blank=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE,related_name='creator', null=True)
-    code = models.ForeignKey(Pswd, on_delete=models.CASCADE, related_name='code',null=True)
+    code = models.CharField(max_length=6, null=False, default="passwd")
     user_profile = models.ManyToManyField(UserProfile)
 
     def __str__(self):

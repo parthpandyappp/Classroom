@@ -1,1 +1,32 @@
-Not done!
+{% extends "class/base.html" %} {% load static %} {% block title %} {% for classroom in classrooms %} {% if classroom.passcod.passcode == pswd %} {% filter upper %} {{ classroom.classname }} {% endfilter %} {% endif %} {% endfor %} {% endblock %}
+
+<!-- Block body -->
+
+{% block body %}
+{% if messages %}
+<ul class="messages">
+    {% for msg in messages %}       
+    <p class="text-center">
+        <div class="alert alert-{{msg.level_tag}} alert-dismissible text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{msg.message}}
+        </div>
+    </p>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<p align="center">We're sorry to see this :(</p>
+
+
+
+    <div>
+        <img src="{% static 'images/error.svg' %}" height="300" width="300"  class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title text-center font-italic">Sorry! the requested classroom doesn't exist.</h5>
+            <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+        </div>
+    </div>
+<!-- <h2>ClassName : {{ classroom.classname }} </h2> -->
+{% endblock %}

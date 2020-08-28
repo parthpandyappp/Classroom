@@ -2,11 +2,22 @@
 
 <!-- <img src="{% static 'images/create.svg' %}" class="mx-auto d-block" style="height: 450px; width: 60%;"> -->
 
-
-
-<div class="container text-center margin_y ">
+<div class="container text-center ">
 
     {% if user.is_authenticated %}
+        {% if messages %}
+            <ul class="messages">
+                {% for msg in messages %}       
+                    <p class="text-center">
+                        <div class="alert alert-{{msg.level_tag}} alert-dismissible text-center" role="alert">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {{msg.message}}
+                        </div>
+                    </p>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
     <div class="modal-body row">
         <div class="col-md-6 mtop ">
             <h2 class="botn3">Welcome to the alternative Learning</h2>
