@@ -44,7 +44,12 @@
         <ul>
             {% for obj in object_list %}
             <li>
-                {{  obj }}: {{ obj.user_profile }}
+                Students in {{ obj }} class:-
+                {% for user in obj.user_profile.all %}
+                <div class="text-success">
+                    {{ user }}
+                </div>
+                {% endfor %}
             </li>
             {% endfor %}
         </ul>

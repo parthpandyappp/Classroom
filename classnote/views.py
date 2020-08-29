@@ -18,13 +18,17 @@ from .models import classroom
 
 
 def index(request):
+    data = None
     if request.user.is_authenticated:
         me = request.user.username
         you = f"Welcome {me}, enjoy the fun & interactive way of learning!"
         messages.info(request, you)
 
-        classes = classroom.objects.filter(user_profile=request.user.profile)
+        classes = classroom.objects.filter(
+            user_profile__exact=request.user.profile
+        )
         data = {'object_list': classes}
+    print(classes)
 
     return render(request, "class/index.html", data if data else None)
 
