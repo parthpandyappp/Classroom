@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 import secrets
 import string
@@ -6,10 +7,6 @@ import string
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
-from django.views.generic import DetailView, FormView, ListView
-
-from accounts.models import UserProfile
 
 from .forms import Join, RegistrationForm, UserUpdate
 from .models import classroom
@@ -23,10 +20,13 @@ from .models import classroom
 def index(request):
     if request.user.is_authenticated:
         me = request.user.username
-        you = f"Welcome {me}! Enjoy the fun & interactive way of learning!"
+        you = f"Welcome {me}, enjoy the fun & interactive way of learning!"
         messages.info(request, you)
 
-    return render(request, "class/index.html")
+        classes = classroom.objects.filter(user_profile=request.user.profile)
+        data = {'object_list': classes}
+
+    return render(request, "class/index.html", data if data else None)
 
 
 """
@@ -54,41 +54,15 @@ def processing(request):
         name.creator = request.user
         name.code = password
         name.save()
-    return render(request, "class/create.html",
-                  {'password': password, 'creator': name.creator})
+    return render(request, "class/create.html", {'password': password, 'creator': name.creator})
 
 
 """
-    Render a form which prompts the user to fill in the code to join the class.
+    Renders a form which prompts the user to fill in the code to join the class.
 
     A definition where the checking process is carried out for the passcode.
     If passes, okay.html is rendered and if not then no.html is rendered.
 """
-
-
-class JoinView(FormView):
-    form_class = Join
-    template_name = 'class/join2.html'
-    success_url = reverse_lazy('join-done')
-
-    def form_valid(self, form):
-        join = form.cleaned_data.get('join')
-        try:
-            classroom_obj = classroom.objects.get(code=join)
-        except classroom.DoesNotExist:
-            return super(JoinView, self).form_invalid(form)
-        classroom_obj.user_profile.add(self.request.user.profile)
-        return super(JoinView, self).form_valid(form)
-
-
-class JoinDoneView(ListView):
-    template_name = "class/join-done.html"
-    model = UserProfile
-
-    def get_queryset(self):
-        classes = classroom.objects.filter(
-            user_profile=self.request.user.profile)
-        return classes
 
 
 def join(request):
@@ -96,21 +70,20 @@ def join(request):
         form = Join(request.POST)
         if form.is_valid():
             passcode = form.cleaned_data['join']
-            try:
-                classroom_joined = classroom.objects.get(code=passcode)
-            except classroom.DoesNotExist:
+            classrooms = classroom.objects.all()
+            print(classrooms)
+            joinedby = request.user
+            for p in classrooms:
+                if(p.code == passcode):
+                    classrooms.joiners = joinedby
+                    messages.success(
+                        request, 'Welcome! your password has been matched successfully!')
+                    return render(request, "class/okay.html", {'classrooms': classrooms, 'pswd': passcode})
+
+            else:
                 messages.warning(
                     request, 'Sorry, Your password doesn\'t matches')
                 return render(request, "class/no.html")
-
-            joinedby = request.user
-            classroom_joined.joiners = joinedby
-            messages.success(
-                request,
-                'Welcome! your password has been matched successfully!'
-            )
-            return render(request, "class/okay.html",
-                          {'classrooms': classroom_joined, 'pswd': passcode})
 
     else:
         form = Join()
