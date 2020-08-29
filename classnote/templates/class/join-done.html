@@ -1,0 +1,26 @@
+{% extends "class/base.html" %} {% load static %} {% block title %} Join a Class {% endblock %} {% block body %}
+{% csrf_token %}
+
+{% if messages %}
+<ul class="messages">
+    {% for msg in messages %}
+    <p class="text-center">
+        <div class="alert alert-{{msg.level_tag}} text-center" role="alert">
+            {{msg.message}}
+        </div>
+    </p>
+    {% endfor %}
+</ul>
+{% endif %}
+
+Classes you have joined:
+
+<ul>
+    {% for obj in object_list %}
+    <li>
+        {{ obj }}
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
