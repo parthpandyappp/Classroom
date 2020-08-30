@@ -1,4 +1,38 @@
-{% extends "class/base.html" %} {% load static %} {% block title %} Classroom {% endblock %} {% block body %}
+{% extends "class/base.html" %} {% load static %} {% block title %} Classroom {% endblock %}
+{% block style %}
+.card{
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+    transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+  padding: 14px 80px 18px 36px;
+  cursor: pointer;
+}
+
+.card:hover{
+    transform: scale(1.05);
+ box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.card img{
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    max-height: 120px;
+}
+
+.card-1{
+    background-image: url(https://ionicframework.com/img/getting-started/ionic-native-card.png);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 80px;
+}
+.card h3{
+    font-weight: 600;
+}
+
+{% endblock %}
+{% block body %}
 
 <!-- <img src="{% static 'images/create.svg' %}" class="mx-auto d-block" style="height: 450px; width: 60%;"> -->
 
@@ -38,20 +72,29 @@
                 style="height: 400px; width: 100%;">
         </div>
         {% if object_list %}
-        <p>
+        <!-- <p>
             Classes you have joined are:
-        </p>
+        </p> -->
         <ul>
-            {% for obj in object_list %}
-            <li>
-                Students in {{ obj }} class:-
-                {% for user in obj.user_profile.all %}
+            
+            <div class="class_card row">
+                {% for obj in object_list %}
+                      <div class="col-md-4">
+                        <div class="card card-1">
+                          <h3>{{ obj }}</h3>
+                          <p>A curated set of   ES5/ES6/TypeScript wrappers for plugins to easily add any native functionality to your Ionic apps.</p>
+                        </div>
+                      </div>
+                  {% endfor %}
+            </div>
+                <!-- Students in {{ obj }} class:- -->
+                
+                <!-- {% for user in obj.user_profile.all %}
                 <div class="text-success">
                     {{ user }}
                 </div>
-                {% endfor %}
-            </li>
-            {% endfor %}
+                {% endfor %} -->
+            
         </ul>
         {% endif %}
     </div>
