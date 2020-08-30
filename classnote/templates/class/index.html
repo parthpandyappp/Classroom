@@ -71,31 +71,30 @@
             <img src="{% static 'images/undraw_true_friends_c94g.svg' %}" class="mx-auto d-block"
                 style="height: 400px; width: 100%;">
         </div>
+        <div class="mb-4">
+            <h4 >Your Classes :</h4>
+        </div>
+        
         {% if object_list %}
-        <!-- <p>
-            Classes you have joined are:
-        </p> -->
-        <ul>
-            
-            <div class="class_card row">
-                {% for obj in object_list %}
-                      <div class="col-md-4">
-                        <div class="card card-1">
-                          <h3>{{ obj }}</h3>
-                          <p>A curated set of   ES5/ES6/TypeScript wrappers for plugins to easily add any native functionality to your Ionic apps.</p>
-                        </div>
-                      </div>
-                  {% endfor %}
-            </div>
-                <!-- Students in {{ obj }} class:- -->
+        <div class="class_card row">
+                
+            {% for obj in object_list %}
+                  <div class="col-md-4">
+                    <div class="card card-1">
+                      <h3>{{ obj }}</h3>
+                      <p>A curated set of   ES5/ES6/TypeScript wrappers for plugins to easily add any native functionality to your Ionic apps.</p>
+                      <h6>Instructor : {{ classroom.creator }}</h6>
+                    </div>
+                  </div>
+              {% endfor %}
+        </div>
+        <!-- Students in {{ obj }} class:- -->
                 
                 <!-- {% for user in obj.user_profile.all %}
                 <div class="text-success">
                     {{ user }}
                 </div>
                 {% endfor %} -->
-            
-        </ul>
         {% endif %}
     </div>
     <!-- <h2>You name is: {{ user.username }}</h2> -->
