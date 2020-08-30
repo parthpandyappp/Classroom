@@ -28,7 +28,6 @@ def index(request):
             user_profile__exact=request.user.profile
         )
         data = {'object_list': classes}
-    print(classes)
 
     return render(request, "class/index.html", data if data else None)
 
@@ -70,31 +69,32 @@ def processing(request):
 
 
 def join(request):
+    context=None
     if request.method == 'POST':
         form = Join(request.POST)
         if form.is_valid():
             passcode = form.cleaned_data['join']
             classrooms = classroom.objects.all()
             print(classrooms)
-            joinedby = request.user
-            for p in classrooms:
-                if(p.code == passcode):
-                    classrooms.joiners = joinedby
-                    messages.success(
-                        request, 'Welcome! your password has been matched successfully!')
-                    return render(request, "class/okay.html", {'classrooms': classrooms, 'pswd': passcode})
-
-            else:
-                messages.warning(
-                    request, 'Sorry, Your password doesn\'t matches')
+            join = form.cleaned_data.get('join')
+            try:
+                classroom_obj = classroom.objects.get(code=passcode)
+            except classroom.DoesNotExist:
+                messages.warning(request, 'Sorry, Your password doesn\'t matches')
                 return render(request, "class/no.html")
+                
+            
+            classroom_obj.user_profile.add(request.user.profile)
+            messages.success(request, 'Welcome! your password has been matched successfully!')
+            return render(request, "class/okay.html", {'classrooms': classrooms, 'pswd': passcode})
 
+            
     else:
         form = Join()
         context = {"form": form}
 
     messages.info(request, 'Enter the unique passcode below')
-    return render(request, "class/join.html", context)
+    return render(request, "class/join.html", context if context else None)
 
 
 """
