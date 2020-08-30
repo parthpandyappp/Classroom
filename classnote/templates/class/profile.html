@@ -1,4 +1,45 @@
-{% extends "class/base.html" %} {% load static %} {% block title %} Join a Class {% endblock %} {% block body %}
+{% extends "class/base.html" %} {% load static %} {% block title %} {{ user.username }} : Profile {% endblock %}
+{% block style %}
+body{
+    background: linear-gradient(90deg, #e8e8e8 50%, #3d009e 50%);
+}
+.portfolio{
+    padding:6%;
+    text-align:center;
+}
+.heading{
+    background: #fff;
+    padding: 1%;
+    text-align: left;
+    box-shadow: 0px 0px 4px 0px #545b62;
+}
+.heading img{
+    width: 10%;
+}
+.bio-info{
+    padding: 5%;
+    background:#fff;
+    box-shadow: 0px 0px 4px 0px #b0b3b7;
+}
+.name{
+    font-family: 'Charmonman', cursive;
+    font-weight:600;
+}
+.bio-image{
+    text-align:center;
+}
+.bio-image img{
+    border-radius:50%;
+}
+.bio-content{
+    text-align:left;
+}
+.bio-content p{
+    font-weight:600;
+    font-size:30px;
+}
+{% endblock %}
+{% block body %}
 
 {% if messages %}
 <ul class="messages">
@@ -13,7 +54,7 @@
 </ul>
 {% endif %}
 
-<div class="card-body card mb-3 mt-3">
+<!-- <div class="card-body card mb-3 mt-3">
     <ul style="list-style-type:circle;">
         <li><h3 class="card-title">Username : {{user.username}}</h3></li>
         <li><h3 class="card-title">First_name : {{user.first_name}}</h3></li>
@@ -21,5 +62,44 @@
         <li><h3 class="card-title">Email address : {{user.email}}</h3></li>
     </ul>
     <a href="/update-profile/"><button type="submit" class="btn btn-primary">Wanna update above?</button></a>
+</div> -->
+
+
+<div class="container portfolio">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="heading">				
+				<img src="https://image.ibb.co/cbCMvA/logo.png" />
+			</div>
+		</div>	
+	</div>
+	<div class="bio-info">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="bio-image">
+							<img src="{% static 'images/undraw_female_avatar_w3jk.svg' %}" alt="image" width="270" height="270" />
+                        </div>
+                        <div class="icon m-5">
+                            <a href="mailto:{{user.email | safe}}"><svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
+                              </svg></a>
+                        </div>
+					</div>
+				</div>	
+			</div>
+			<div class="col-md-6">
+				<div class="bio-content">
+					<h1>Hi there, I'm {{user.first_name}} {{user.last_name}}</h1>
+					<h5>I am a fresh web designer and I create custom web designs. I'm skilled at writing well-designed, testable and efficient code using current best practices in Web development. I'm a fast learner, hard worker and team player who is proficient in making creative and innovative web pages.</h5>
+				</div>
+			</div>
+        </div>
+        <div class="edit_profile m-2">
+            <a href="/update-profile/"><button type="submit" class="btn btn-primary">Wanna update above?</button></a>
+        </div>
+        
+	</div>
 </div>
 {% endblock %}
