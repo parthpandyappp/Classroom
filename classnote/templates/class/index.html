@@ -71,19 +71,21 @@
             <img src="{% static 'images/undraw_true_friends_c94g.svg' %}" class="mx-auto d-block"
                 style="height: 400px; width: 100%;">
         </div>
+        
+        
+        {% if object_list %}
         <div class="mb-4">
             <h4 >Your Classes :</h4>
         </div>
         
-        {% if object_list %}
         <div class="class_card row">
                 
             {% for obj in object_list %}
-                  <div class="col-md-4">
+                  <div class="col-md-4 d-flex align-items-stretch mt-5">
                     <div class="card card-1">
                       <h3>{{ obj }}</h3>
                       <p>A curated set of   ES5/ES6/TypeScript wrappers for plugins to easily add any native functionality to your Ionic apps.</p>
-                      <h6>Instructor : {{ classroom.creator }}</h6>
+                      <h6>Instructor : {{ obj.creator }}</h6>
                     </div>
                   </div>
               {% endfor %}
