@@ -1,5 +1,5 @@
 # Classroom
-An open source google classroom alternative in django.
+An Open-Source Google Classroom alternative in django.
 
 ## Features
 - Create a class
