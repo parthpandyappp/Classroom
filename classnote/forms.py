@@ -50,3 +50,21 @@ class UserUpdate(forms.ModelForm):
         ]
         def __init__(self):
             super(UserUpdate, self).__init__()
+
+class UserProfileform(forms.Form):
+    Description = forms.CharField(max_length=150)
+    class Meta:
+        model = UserProfile
+        fields = [
+            'Description',
+        ]
+
+class UpdateUserProfileform(forms.Form):
+    Description = forms.CharField(max_length=150)
+    class Meta:
+        model = UserProfile
+        fields = [
+            'Description',
+        ]
+        def __init__(self):
+            super(UpdateUserProfileform, self).__init__()

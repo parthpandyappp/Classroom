@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
 
-from .forms import Join, RegistrationForm, UserUpdate
+from .forms import Join, RegistrationForm, UserUpdate, UserProfileform, UpdateUserProfileform
 from .models import classroom
 
 
@@ -105,6 +105,7 @@ def join(request):
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
+        profile_form = UserProfileform(request.POST)
 
         if form.is_valid():
             form.save()
@@ -115,8 +116,9 @@ def register(request):
             return redirect('index')
     else:
         form = RegistrationForm()
+        profile_form = UserProfileform()
 
-    context = {'form': form}
+    context = {'form': form, 'profile_form':profile_form}
     return render(request, 'registration/register.html', context)
 
 
@@ -132,6 +134,7 @@ def profile(request):
 def UserUpdatation(request):
     if request.method == 'POST':
         form = UserUpdate(request.POST, instance=request.user)
+        profile_form = UserProfileform(request.POST)
 
         if form.is_valid():
             form.save()
@@ -139,6 +142,8 @@ def UserUpdatation(request):
             return render(request, 'class/profile.html')
     else:
         form = UserUpdate(instance=request.user)
+        profile_form = UserProfileform()
         args = {}
         args['form'] = form
+        args['profile_form'] = profile_form
         return render(request, 'class/edit_profile.html', args)
