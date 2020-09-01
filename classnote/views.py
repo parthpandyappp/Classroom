@@ -8,7 +8,10 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
 
-from .forms import Join, RegistrationForm, UserUpdate, UserProfileform, UpdateUserProfileform
+from accounts.models import UserProfile
+
+from .forms import (Join, RegistrationForm, UpdateUserProfileform,
+                    UserProfileform, UserUpdate)
 from .models import classroom
 
 
@@ -69,26 +72,30 @@ def processing(request):
 
 
 def join(request):
-    context=None
+    context = None
     if request.method == 'POST':
         form = Join(request.POST)
         if form.is_valid():
             passcode = form.cleaned_data['join']
             classrooms = classroom.objects.all()
             print(classrooms)
-            join = form.cleaned_data.get('join')
             try:
                 classroom_obj = classroom.objects.get(code=passcode)
             except classroom.DoesNotExist:
-                messages.warning(request, 'Sorry, Your password doesn\'t matches')
+                messages.warning(
+                    request, 'Sorry, Your password doesn\'t match'
+                )
                 return render(request, "class/no.html")
-                
-            
-            classroom_obj.user_profile.add(request.user.profile)
-            messages.success(request, 'Welcome! your password has been matched successfully!')
-            return render(request, "class/okay.html", {'classrooms': classrooms, 'pswd': passcode})
 
-            
+            classroom_obj.user_profile.add(request.user.profile)
+            messages.success(
+                request, 'Welcome! Your password was matched successfully!'
+            )
+            return render(
+                request, "class/okay.html",
+                {'classrooms': classrooms, 'pswd': passcode}
+            )
+
     else:
         form = Join()
         context = {"form": form}
@@ -107,18 +114,22 @@ def register(request):
         form = RegistrationForm(request.POST)
         profile_form = UserProfileform(request.POST)
 
-        if form.is_valid():
+        if form.is_valid() and profile_form.is_valid():
             form.save()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
+            description = profile_form.cleaned_data['Description']
             user = authenticate(username=username, password=password)
             login(request, user)
+            profile = UserProfile.objects.get(user=user)
+            profile.description = description
+            profile.save()
             return redirect('index')
     else:
         form = RegistrationForm()
         profile_form = UserProfileform()
 
-    context = {'form': form, 'profile_form':profile_form}
+    context = {'form': form, 'profile_form': profile_form}
     return render(request, 'registration/register.html', context)
 
 
