@@ -67,7 +67,7 @@ class UserUpdate(forms.ModelForm):
 
 
 class UserProfileform(forms.Form):
-    Description = forms.CharField(max_length=150)
+    Description = forms.CharField(max_length=300)
 
     class Meta:
         fields = [

@@ -60,7 +60,7 @@ def processing(request):
         name.creator = request.user
         name.code = password
         name.save()
-    return render(request, "class/create.html", {'password': password, 'creator': name.creator})
+    return render(request, "class/create.html", {'password': password, 'creator': name.creator, 'name': name.classname})
 
 
 """
@@ -139,7 +139,10 @@ def register(request):
 
 
 def profile(request):
-    return render(request, "class/profile.html")
+    desc = None
+    desc = UserProfile.objects.get(user=request.user)
+    desc = {'desc':desc}
+    return render(request, "class/profile.html", desc if desc else None)
 
 
 def UserUpdatation(request):
@@ -147,13 +150,20 @@ def UserUpdatation(request):
         form = UserUpdate(request.POST, instance=request.user)
         profile_form = UserProfileform(request.POST)
 
-        if form.is_valid():
+        if form.is_valid() and profile_form.is_valid():
             form.save()
+            description = profile_form.cleaned_data['Description']
+            profile = UserProfile.objects.get(user=request.user)
+            profile.description = description
+            profile.save()
+            #profile_form.save()
             messages.success(request, 'Great, User updated successfully!')
-            return render(request, 'class/profile.html')
+            return render(request, 'class/profile.html', {'profile': profile})
     else:
         form = UserUpdate(instance=request.user)
-        profile_form = UserProfileform()
+        des = UserProfile.objects.get(user=request.user)
+        profile_form = UserProfileform(
+            initial={'Description': des.description})
         args = {}
         args['form'] = form
         args['profile_form'] = profile_form

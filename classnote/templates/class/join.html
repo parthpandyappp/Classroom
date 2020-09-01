@@ -2,20 +2,20 @@
 <form action="." method="post">
     {% csrf_token %}
 
-        {% if messages %}
-            <ul class="messages">
-                {% for msg in messages %}       
-                    <p class="text-center">
-                        <div class="alert alert-{{msg.level_tag}} text-center" role="alert">
-                            {{msg.message}}
-                        </div>
-                    </p>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    
+    {% if messages %}
+    <ul class="messages">
+        {% for msg in messages %}
+        <p class="text-center">
+        <div class="alert alert-{{msg.level_tag}} text-center" role="alert">
+            {{msg.message}}
+        </div>
+        </p>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     {{form.as_p}}
-    
+
     <button type="submit" class="btn btn-primary">Let's Join</button>
 </form>
 {% endblock %}
