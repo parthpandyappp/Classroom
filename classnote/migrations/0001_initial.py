@@ -18,10 +18,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='classroom',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('classname', models.CharField(max_length=50, null=True)),
                 ('code', models.CharField(default='passwd', max_length=6)),
-                ('creator', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='creator', to=settings.AUTH_USER_MODEL)),
+                ('creator', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE,
+                                              related_name='creator', to=settings.AUTH_USER_MODEL)),
                 ('user_profile', models.ManyToManyField(to='accounts.UserProfile')),
             ],
         ),

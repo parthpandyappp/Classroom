@@ -83,13 +83,18 @@ def join(request):
                 classroom_obj = classroom.objects.get(code=passcode)
             except classroom.DoesNotExist:
                 messages.warning(
-                    request, 'Sorry, Your password doesn\'t matches')
+                    request, 'Sorry, Your password doesn\'t match'
+                )
                 return render(request, "class/no.html")
 
             classroom_obj.user_profile.add(request.user.profile)
             messages.success(
-                request, 'Welcome! your password has been matched successfully!')
-            return render(request, "class/okay.html", {'classrooms': classrooms, 'pswd': passcode})
+                request, 'Welcome! Your password was matched successfully!'
+            )
+            return render(
+                request, "class/okay.html",
+                {'classrooms': classrooms, 'pswd': passcode}
+            )
 
     else:
         form = Join()
