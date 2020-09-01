@@ -5,4 +5,3 @@ from django.apps import AppConfig
 
 class ClassnoteConfig(AppConfig):
     name = 'classnote'
-    

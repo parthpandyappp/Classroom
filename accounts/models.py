@@ -9,6 +9,7 @@ class UserProfile(models.Model):
         User, on_delete=models.CASCADE, related_name='profile',
         null=True, blank=True
     )
+    description = models.TextField()
 
     def __str__(self):
         return self.user.username

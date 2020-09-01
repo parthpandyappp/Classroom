@@ -3,7 +3,8 @@
     <form method="post">
         {% csrf_token %}
         {{form.as_p}}
-        <br>
+        {{ profile_form }}
+        <br><br><br>
         <button type="submit" class="btn btn-primary btn-block btn-lg">Update</button>
     </form>
     <br>
