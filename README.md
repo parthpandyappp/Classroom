@@ -10,6 +10,8 @@ An Open-Source Google Classroom alternative in django.
 
 Soon to be completed and will be ready for beta.
 
+#### Meanwhile, [Join](https://discord.gg/MF7Mn9q) our Discord server for development and early user sign up.
+
 ### Early Preview
 
 - Home 
