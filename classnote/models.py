@@ -1,7 +1,6 @@
+from accounts.models import UserProfile
 from django.contrib.auth.models import User
 from django.db import models
-
-from accounts.models import UserProfile
 
 """
     Model for storing unique pass-code, and performing queries

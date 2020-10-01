@@ -1,33 +1,4 @@
 {% extends "class/base.html" %}
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-
-<body>
-    {% if form.errors %}
-    <p>There's something wrong with what you entered!</p>
-    {% endif %} {% if next %}
-    <p>Hey, you can't access that page.</p>
-    {% endif %}
-
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-
-        <p>Username: {{ form.username }}</p>
-        <p>Password: {{ form.password }}</p>
-
-        <p><input type="submit" value="login"></p>
-        <input type="hidden" name="next" value="{{ next }}">
-    </form>
-
-</body>
-
-</html> -->
-
 {% block title %} Login {% endblock %} {% block body %}
 <div class="login-form">
     {% if form.errors %}
@@ -35,7 +6,7 @@
     {% endif %} {% if next %}
     <p>Hey, you can't access that page.</p>
     {% endif %}
-    <form action="{% url 'login' %}" method="post">
+    <form action="{% url 'accounts:login' %}" method="post">
         {% csrf_token %}
         <h2 class="text-center">Log in</h2>
         <div class="form-group">
@@ -58,6 +29,6 @@
             <a href="#" class="float-right">Forgot Password?</a>
         </div>
     </form>
-    <p class="text-center"><a href="/register">Create an Account</a></p>
+    <p class="text-center"><a href="{% url 'accounts:register' %}">Create an Account</a></p>
 </div>
 {% endblock %}
