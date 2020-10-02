@@ -92,7 +92,7 @@ class JoinView(FormView):
     """
     Renders a form which prompts the user to fill in the code to join the class.
     A definition where the checking process is carried out for the passcode.
-    If passes, okay.html is rendered and if not then no.html is rendered.
+    If passes, `class:okay` is rendered and if not then a message is rendered.
     """
     template_name = 'class/join.html'
     form_class = Join
