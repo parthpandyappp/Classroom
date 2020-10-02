@@ -99,15 +99,17 @@ class JoinView(FormView):
     success_url = reverse_lazy('classnote:okay')
 
     def form_valid(self, form):
+        user_profile = self.request.user.profile
         passcode = form.cleaned_data['join']
         try:
             classroom_obj = classroom.objects.get(code=passcode)
         except classroom.DoesNotExist:
             return self.form_invalid(form)
-        if classroom_obj in self.request.user.profile.classroom_set.all():
+        if classroom_obj in user_profile.classroom_set.all():
+            # Though this message is being added to context, it's not being displayed
             messages.error(self.request, 'You are already in that class')
         else:
-            classroom_obj.user_profile.add(self.request.user.profile)
+            classroom_obj.user_profile.add(user_profile)
             messages.success(self.request, 'You were added to class successfully!')
         return super(JoinView, self).form_valid(form)
 
