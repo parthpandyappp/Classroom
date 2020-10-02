@@ -1,11 +1,9 @@
+from classnote.models import classroom
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 from accounts.models import UserProfile
-
-from .models import classroom
-
 
 """
     User-registration form which extends user model with extra fields

@@ -1,5 +1,5 @@
 # Classroom
-An open source google classroom alternative in django.
+An Open-Source Google Classroom alternative in django.
 
 ## Features
 - Create a class
@@ -10,17 +10,41 @@ An open source google classroom alternative in django.
 
 Soon to be completed and will be ready for beta.
 
+#### Meanwhile, [Join](https://discord.gg/MF7Mn9q) our Discord server for development and early user sign up.
+
 ### Early Preview
 
-![home](https://i.imgur.com/6e18dOT.png)
-![login](https://i.imgur.com/z223sxf.png)
+- Home 
+<p align="center">
+  <img src="https://i.imgur.com/0pXAU4k.png" title="Home"/>
+</p>
 
-## Contributors
+- Profile 
+<p align="center">
+  <img src="https://i.imgur.com/OGRr6pr.png" title="Profile"/>
+</p>
 
-<p align="center"><a href="https://github.com/parthpandyappp/Classroom/graphs/contributors">
-  <img src="https://contributors-img.web.app/image?repo=parthpandyappp/Classroom" />
-</a></p>
+- Create a Class 
+<p align="center">
+  <img src="https://i.imgur.com/aCinQjH.png" title="Create a Class"/>
+</p>
 
-<p align="center"><a  href="https://dev.to/parthpandyappp">
-  <img  src="https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg" alt="Parth Pandya.'s DEV Profile" height="50" width="50">
-</a></p>
+- Join a Class 
+<p align="center">
+  <img src="https://i.imgur.com/doBiQQX.png" title="Join a Class"/>
+</p>
+
+- Login 
+<p align="center">
+  <img src="https://i.imgur.com/uTmquey.png" title="Login"/>
+</p>
+
+
+<img align="left" src="https://posthog-static-files.s3.us-east-2.amazonaws.com/Website-Assets/rebrand/icons/Untitled_Artwork+2+copy+15+1.jpg" width="50px" />
+
+## Contributors 🦸
+
+<p align="center">
+  <a href="https://github.com/parthpandyappp/Classroom/graphs/contributors"><img src="https://contributors-img.web.app/image?repo=parthpandyappp/Classroom" /></a>
+</p>
+

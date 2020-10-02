@@ -1,26 +1,20 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import secrets
 import string
 
+from accounts.models import UserProfile
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
-
-from accounts.models import UserProfile
 
 from .forms import (Join, RegistrationForm, UpdateUserProfileform,
                     UserProfileform, UserUpdate)
 from .models import classroom
 
 
-"""
-    Renders Home Page of the project.
-"""
-
-
 def index(request):
+    """
+        Renders Home Page of the project.
+    """
     data = None
     if request.user.is_authenticated:
         me = request.user.username
@@ -35,12 +29,10 @@ def index(request):
     return render(request, "class/index.html", data if data else None)
 
 
-"""
-    Renders a form prompting user for classname and related credentials.
-"""
-
-
 def create(request):
+    """
+        Renders a form prompting user for classname and related credentials.
+    """
     return render(request, "class/upload.html")
 
 
@@ -60,7 +52,7 @@ def processing(request):
         name.creator = request.user
         name.code = password
         name.save()
-    return render(request, "class/create.html", {'password': password, 'creator': name.creator})
+    return render(request, "class/create.html", {'password': password, 'creator': name.creator, 'name': name.classname})
 
 
 """
@@ -102,59 +94,3 @@ def join(request):
 
     messages.info(request, 'Enter the unique passcode below')
     return render(request, "class/join.html", context if context else None)
-
-
-"""
-    A definition which registers & logs in a user.
-"""
-
-
-def register(request):
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        profile_form = UserProfileform(request.POST)
-
-        if form.is_valid() and profile_form.is_valid():
-            form.save()
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-            description = profile_form.cleaned_data['Description']
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            profile = UserProfile.objects.get(user=user)
-            profile.description = description
-            profile.save()
-            return redirect('index')
-    else:
-        form = RegistrationForm()
-        profile_form = UserProfileform()
-
-    context = {'form': form, 'profile_form': profile_form}
-    return render(request, 'registration/register.html', context)
-
-
-"""
-    Below views for Profile details and it's updations
-"""
-
-
-def profile(request):
-    return render(request, "class/profile.html")
-
-
-def UserUpdatation(request):
-    if request.method == 'POST':
-        form = UserUpdate(request.POST, instance=request.user)
-        profile_form = UserProfileform(request.POST)
-
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Great, User updated successfully!')
-            return render(request, 'class/profile.html')
-    else:
-        form = UserUpdate(instance=request.user)
-        profile_form = UserProfileform()
-        args = {}
-        args['form'] = form
-        args['profile_form'] = profile_form
-        return render(request, 'class/edit_profile.html', args)

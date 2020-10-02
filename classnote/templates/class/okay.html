@@ -1,17 +1,21 @@
-{% extends "class/base.html" %} {% load static %} {% block title %} {% for classroom in classrooms %} {% if classroom.passcod.passcode == pswd %} {% filter upper %} {{ classroom.classname }} {% endfilter %} {% endif %} {% endfor %} {% endblock %}
-
+{% extends "class/base.html" %} {% load static %}
+{% block title %}
+{% for classroom in classrooms %} {% if classroom.code == pswd %}
+{{classroom.classname}}
+{% endif %} {% endfor %}
+{% endblock %}
 {% block body %}
 
 {% for classroom in classrooms %} {% if classroom.code == pswd %}
 
 {% if messages %}
 <ul class="messages">
-    {% for msg in messages %}       
+    {% for msg in messages %}
     <p class="text-center">
-        <div class="alert alert-{{msg.level_tag}} alert-dismissible text-center" role="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{msg.message}}
-        </div>
+    <div class="alert alert-{{msg.level_tag}} alert-dismissible text-center" role="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{msg.message}}
+    </div>
     </p>
     {% endfor %}
 </ul>

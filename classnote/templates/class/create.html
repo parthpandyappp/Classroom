@@ -1,9 +1,9 @@
-{% extends "class/base.html" %} {% block title %} Create a Class {% endblock %} {% block body %}
+{% extends "class/base.html" %} {% block title %} Class : {{name}} {% endblock %} {% block body %}
 <p> Class mentored by : {{creator}} <br>
     Share this six digit passcode with students :
-    <div id="myInput">
-        {{password}}
-    </div>
+<div id="myInput">
+    {{password}}
+</div>
 </p>
 <button class="btn inner bordered " data-clipboard-target="#myInput">Copy text</button>
 
