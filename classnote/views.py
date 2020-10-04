@@ -1,14 +1,13 @@
 import secrets
 import string
 
-from accounts.models import UserProfile
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
-from django.shortcuts import redirect, render
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import FormView, ListView, TemplateView
 
-from .forms import (Join, RegistrationForm, UpdateUserProfileform,
-                    UserProfileform, UserUpdate)
-from .models import classroom
+from classnote.forms import Join
+from classnote.models import classroom
 
 
 def index(request):
@@ -55,15 +54,8 @@ def processing(request):
     return render(request, "class/create.html", {'password': password, 'creator': name.creator, 'name': name.classname})
 
 
-"""
-    Renders a form which prompts the user to fill in the code to join the class.
-
-    A definition where the checking process is carried out for the passcode.
-    If passes, okay.html is rendered and if not then no.html is rendered.
-"""
-
-
 def join(request):
+    """ This view is not used anymore- please delete it. """
     context = None
     if request.method == 'POST':
         form = Join(request.POST)
@@ -94,3 +86,41 @@ def join(request):
 
     messages.info(request, 'Enter the unique passcode below')
     return render(request, "class/join.html", context if context else None)
+
+
+class JoinView(FormView):
+    """
+    Renders a form which prompts the user to fill in the code to join the class.
+    A definition where the checking process is carried out for the passcode.
+    If passes, `class:okay` is rendered and if not then a message is rendered.
+    """
+    template_name = 'class/join.html'
+    form_class = Join
+    success_url = reverse_lazy('classnote:okay')
+
+    def form_valid(self, form):
+        user_profile = self.request.user.profile
+        passcode = form.cleaned_data['join']
+        try:
+            classroom_obj = classroom.objects.get(code=passcode)
+        except classroom.DoesNotExist:
+            return self.form_invalid(form)
+        if classroom_obj in user_profile.classroom_set.all():
+            # Though this message is being added to context, it's not being displayed
+            messages.error(self.request, 'You are already in that class')
+        else:
+            classroom_obj.user_profile.add(user_profile)
+            messages.success(self.request, 'You were added to class successfully!')
+        return super(JoinView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'You have added incorrect passcode')
+        return super(JoinView, self).form_invalid(form)
+
+
+class JoinOkayView(ListView):
+    model = classroom
+    template_name = 'class/okay.html'
+
+    def get_queryset(self):
+        return self.request.user.profile.classroom_set.all()

@@ -1,37 +1,23 @@
-{% extends "class/base.html" %} {% load static %}
+{% extends "class/base.html" %}
+{% load static %}
+
 {% block title %}
-{% for classroom in classrooms %} {% if classroom.code == pswd %}
-{{classroom.classname}}
-{% endif %} {% endfor %}
+{{ user.username }}'s classes
 {% endblock %}
+
 {% block body %}
-
-{% for classroom in classrooms %} {% if classroom.code == pswd %}
-
-{% if messages %}
-<ul class="messages">
-    {% for msg in messages %}
-    <p class="text-center">
-    <div class="alert alert-{{msg.level_tag}} alert-dismissible text-center" role="alert">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{msg.message}}
-    </div>
-    </p>
-    {% endfor %}
-</ul>
-{% endif %}
-
-
+{% include 'class/messages.html' %}
 <div class="container ">
     <div class="card mb-3 mt-3">
         <img src="{% static 'images/8.png' %}" class="card-img-top" alt="...">
+        {% for class in object_list %}
         <div class="card-body">
-            <h5 class="card-title text-uppercase">{{ classroom.classname }}</h5>
-            <h7 class="card-title text">Class managed & mentored by : {{ classroom.creator }}</h7>
+            <h5 class="card-title text-uppercase">{{ class.classname }}</h5>
+            <h7 class="card-title text">Class managed & mentored by : {{ class.creator }}</h7>
             <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
         </div>
+        {% endfor %}
     </div>
 </div>
-<!-- <h2>ClassName : {{ classroom.classname }} </h2> -->
-{% endif %} {% endfor %} {% endblock %}
+{% endblock %}
