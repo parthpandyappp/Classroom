@@ -4,7 +4,7 @@ An Open-Source Google Classroom alternative in django.
 ## Features
 - Create a class
 - Join a class
-- Modifible Classname, Class banner
+- Modifiable Classname, Class banner
 - Doesn't track you
 - Clean interface
 
