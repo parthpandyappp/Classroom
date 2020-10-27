@@ -21,7 +21,7 @@ from accounts.models import UserProfile
 
 
 class classroom(models.Model):
-    classname = models.CharField(max_length=50, null=True)
+    classname = models.CharField(max_length=50, null=True, unique=True)
     creator = models.ForeignKey(
         User, on_delete=models.CASCADE,
         related_name='creator', null=True

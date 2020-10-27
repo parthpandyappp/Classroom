@@ -57,6 +57,9 @@ def processing(request):
     if request.method == "POST":
         name = classroom()
         name.classname = request.POST.get('class_name')
+        if classroom.objects.filter(classname=name.classname).exists():
+            messages.info(request, 'Class name already exists')
+            return redirect('/create')
         name.creator = request.user
         name.code = password
         name.save()

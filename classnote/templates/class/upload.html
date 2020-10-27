@@ -10,6 +10,9 @@
     </div>
     <button type="submit" class="btn btn-primary">Go ahead! Create my classroom!</button>
 </form>
+    {% for message in messages %}
+        <h3>{{ message }}</h3>
+    {% endfor %}
 
 
 {% endblock %}
