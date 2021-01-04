@@ -1,36 +1,38 @@
 {% extends "class/base.html" %} {% load static %} {% block title %} Classroom {% endblock %}
 {% block style %}
-.card{
-border-radius: 4px;
-background: #fff;
-box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
-transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform
-cubic-bezier(.155,1.105,.295,1.12);
-padding: 14px 80px 18px 36px;
-cursor: pointer;
-}
+<style>
+    .card {
+        border-radius: 4px;
+        background: #fff;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+        transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+        padding: 14px 80px 18px 36px;
+        cursor: pointer;
+    }
 
-.card:hover{
-transform: scale(1.05);
-box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-}
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+    }
 
-.card img{
-position: absolute;
-top: 20px;
-right: 15px;
-max-height: 120px;
-}
+    .card img {
+        position: absolute;
+        top: 20px;
+        right: 15px;
+        max-height: 120px;
+    }
 
-.card-1{
-background-image: url(https://ionicframework.com/img/getting-started/ionic-native-card.png);
-background-repeat: no-repeat;
-background-position: right;
-background-size: 80px;
-}
-.card h3{
-font-weight: 600;
-}
+    .card-1 {
+        background-image: url(https://ionicframework.com/img/getting-started/ionic-native-card.png);
+        background-repeat: no-repeat;
+        background-position: right;
+        background-size: 80px;
+    }
+
+    .card h3 {
+        font-weight: 600;
+    }
+</style>
 
 {% endblock %}
 {% block body %}
@@ -44,10 +46,10 @@ font-weight: 600;
     <ul class="messages">
         {% for msg in messages %}
         <p class="text-center">
-        <div class="alert alert-{{msg.level_tag}} alert-dismissible text-center" role="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{msg.message}}
-        </div>
+            <div class="alert alert-{{msg.level_tag}} alert-dismissible text-center" role="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{msg.message}}
+            </div>
         </p>
         {% endfor %}
     </ul>
@@ -108,7 +110,7 @@ font-weight: 600;
     <button class="btn inner m-5 bordered " onclick="window.location.href='/join'"><i class="fa fa-plus"></i> Join Class</button>  -->
     {% else %}
     <h2>You are not logged in.</h2>
-    <p> <u><a href="/accounts/login">Login</a></u> to get full access to the classroom.</p>
+    <p> <u><a href="{% url 'accounts:login' %}">Login</a></u> to get full access to the classroom.</p>
     <img src="{% static 'images/undraw_refreshing_beverage_td3r.svg' %}" class="img-fluid"
         style="height: 250px; width: 100%;"> {% endif %}
 </div>

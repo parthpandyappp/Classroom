@@ -1,26 +1,19 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import secrets
 import string
 
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
-from django.shortcuts import redirect, render
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import FormView, ListView, TemplateView
 
-from accounts.models import UserProfile
-
-from .forms import (Join, RegistrationForm, UpdateUserProfileform,
-                    UserProfileform, UserUpdate)
-from .models import classroom
-
-
-"""
-    Renders Home Page of the project.
-"""
+from classnote.forms import Join
+from classnote.models import classroom
 
 
 def index(request):
+    """
+        Renders Home Page of the project.
+    """
     data = None
     if request.user.is_authenticated:
         me = request.user.username
@@ -35,12 +28,10 @@ def index(request):
     return render(request, "class/index.html", data if data else None)
 
 
-"""
-    Renders a form prompting user for classname and related credentials.
-"""
-
-
 def create(request):
+    """
+        Renders a form prompting user for classname and related credentials.
+    """
     return render(request, "class/upload.html")
 
 
@@ -66,15 +57,8 @@ def processing(request):
     return render(request, "class/create.html", {'password': password, 'creator': name.creator, 'name': name.classname})
 
 
-"""
-    Renders a form which prompts the user to fill in the code to join the class.
-
-    A definition where the checking process is carried out for the passcode.
-    If passes, okay.html is rendered and if not then no.html is rendered.
-"""
-
-
 def join(request):
+    """ This view is not used anymore- please delete it. """
     context = None
     if request.method == 'POST':
         form = Join(request.POST)
@@ -107,67 +91,37 @@ def join(request):
     return render(request, "class/join.html", context if context else None)
 
 
-"""
-    A definition which registers & logs in a user.
-"""
+class JoinView(FormView):
+    """
+    Renders a form which prompts the user to fill in the code to join the class.
+    A definition where the checking process is carried out for the passcode.
+    If passes, okay.html is rendered and if not then no.html is rendered.
+    """
+    template_name = 'class/join.html'
+    form_class = Join
+    success_url = reverse_lazy('classnote:okay')
+
+    def form_valid(self, form):
+        passcode = form.cleaned_data['join']
+        try:
+            classroom_obj = classroom.objects.get(code=passcode)
+        except classroom.DoesNotExist:
+            return self.form_invalid(form)
+        if classroom_obj in self.request.user.profile.classroom_set.all():
+            messages.error(self.request, 'You are already in that class')
+        else:
+            classroom_obj.user_profile.add(self.request.user.profile)
+            messages.success(self.request, 'You were added to class successfully!')
+        return super(JoinView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'You have added incorrect passcode')
+        return super(JoinView, self).form_invalid(form)
 
 
-def register(request):
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        profile_form = UserProfileform(request.POST)
+class JoinOkayView(ListView):
+    model = classroom
+    template_name = 'class/okay.html'
 
-        if form.is_valid() and profile_form.is_valid():
-            form.save()
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-            description = profile_form.cleaned_data['Description']
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            profile = UserProfile.objects.get(user=user)
-            profile.description = description
-            profile.save()
-            return redirect('index')
-    else:
-        form = RegistrationForm()
-        profile_form = UserProfileform()
-
-    context = {'form': form, 'profile_form': profile_form}
-    return render(request, 'registration/register.html', context)
-
-
-"""
-    Below views for Profile details and it's updations
-"""
-
-
-def profile(request):
-    desc = None
-    desc = UserProfile.objects.get(user=request.user)
-    desc = {'desc':desc}
-    return render(request, "class/profile.html", desc if desc else None)
-
-
-def UserUpdatation(request):
-    if request.method == 'POST':
-        form = UserUpdate(request.POST, instance=request.user)
-        profile_form = UserProfileform(request.POST)
-
-        if form.is_valid() and profile_form.is_valid():
-            form.save()
-            description = profile_form.cleaned_data['Description']
-            profile = UserProfile.objects.get(user=request.user)
-            profile.description = description
-            profile.save()
-            #profile_form.save()
-            messages.success(request, 'Great, User updated successfully!')
-            return render(request, 'class/profile.html', {'profile': profile})
-    else:
-        form = UserUpdate(instance=request.user)
-        des = UserProfile.objects.get(user=request.user)
-        profile_form = UserProfileform(
-            initial={'Description': des.description})
-        args = {}
-        args['form'] = form
-        args['profile_form'] = profile_form
-        return render(request, 'class/edit_profile.html', args)
+    def get_queryset(self):
+        return self.request.user.profile.classroom_set.all()

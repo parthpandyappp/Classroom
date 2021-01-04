@@ -5,7 +5,7 @@
     {% endif %} {% if next %}
     <p>Hey, you can't access that page.</p>
     {% endif %}
-    <form action="{% url 'register' %}" method="post">
+    <form method="post">
         {% csrf_token %}
         <!-- <h2 class="text-center">Log in</h2>
         <div class="form-group">
@@ -32,6 +32,6 @@
         {{ profile_form }}
         <input type="submit" class="btn btn-primary btn-block mt-2" value="Register">
     </form>
-    <p class="text-center"><a href="/accounts/login">Already have account? Login</a></p>
+    <p class="text-center"><a href="{% url 'accounts:login' %}">Already have account? Login</a></p>
 </div>
 {% endblock %}
