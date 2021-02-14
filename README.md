@@ -2,7 +2,7 @@
 An Open-Source Google Classroom alternative in django.
 
 ![GitHub](https://img.shields.io/github/license/parthpandyappp/Classroom?style=for-the-badge)
-![Discord](https://img.shields.io/discord/739722101803712585?style=for-the-badge)
+[![Discord](https://img.shields.io/discord/739722101803712585?style=for-the-badge)](https://discord.gg/MF7Mn9q)
 ![Django](https://img.shields.io/badge/Powered%20by-Djnago-blue?style=for-the-badge&logo=appveyor)
 
 ## Features
