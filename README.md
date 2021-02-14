@@ -1,6 +1,10 @@
 # Classroom
 An Open-Source Google Classroom alternative in django.
 
+![GitHub](https://img.shields.io/github/license/parthpandyappp/Classroom?style=for-the-badge)
+![Discord](https://img.shields.io/discord/739722101803712585?style=for-the-badge)
+![Django](https://img.shields.io/badge/Powered%20by-Djnago-blue?style=for-the-badge&logo=appveyor)
+
 ## Features
 - Create a class
 - Join a class
@@ -39,8 +43,19 @@ Soon to be completed and will be ready for beta.
   <img src="https://i.imgur.com/uTmquey.png" title="Login"/>
 </p>
 
+## Local Installation
+- clone/download the repo.
+- go to project folder.
+- run `pip install -r requirements.txt`.
+- then run `python manage.py runserver`.
+- visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser.
+
+
+##### Ask you queries by [Joining](https://discord.gg/MF7Mn9q) our Discord server.
+
 
 <img align="left" src="https://posthog-static-files.s3.us-east-2.amazonaws.com/Website-Assets/rebrand/icons/Untitled_Artwork+2+copy+15+1.jpg" width="50px" />
+
 
 ## Contributors 🦸
 
